@@ -18,18 +18,18 @@ public class Player extends Entity{
 	public  final  int screenY;
 
 
-	File p1 = new File("src/res/player/1d.png");
-	File p2 = new File("src/res/player/2d.png");
-	File p3 = new File("src/res/player/3d.png");
+	File p1 = new File("src/res/player/1.png");
+	File p2 = new File("src/res/player/2.png");
+	File p3 = new File("src/res/player/3.png");
 	File p4 = new File("src/res/player/1d.png");
 	File p5 = new File("src/res/player/2d.png");
 	File p6 = new File("src/res/player/3d.png");
-	File p7 = new File("src/res/player/1d.png");
-	File p8 = new File("src/res/player/2d.png");
-	File p9 = new File("src/res/player/3d.png");
-	File p10 = new File("src/res/player/1d.png");
-	File p11 = new File("src/res/player/2d.png");
-	File p12 = new File("src/res/player/3d.png");
+	File p7 = new File("src/res/player/1L.png");
+	File p8 = new File("src/res/player/2L.png");
+	File p9 = new File("src/res/player/3L.png");
+	File p10 = new File("src/res/player/1r.png");
+	File p11 = new File("src/res/player/2r.png");
+	File p12 = new File("src/res/player/3r.png");
 
 	public Player (GamePanel gp, KeyHandler keyH) throws IOException {
 
@@ -52,8 +52,8 @@ public class Player extends Entity{
 
 	public void getPlayerImage() throws IOException {
 		up1 = ImageIO.read(p1);
-		up1 = ImageIO.read(p2);
-		up1 = ImageIO.read(p3);
+		up2 = ImageIO.read(p2);
+		up3 = ImageIO.read(p3);
 		down1 = ImageIO.read(p4);
 		down2 = ImageIO.read(p5);
 		down3 = ImageIO.read(p6);
