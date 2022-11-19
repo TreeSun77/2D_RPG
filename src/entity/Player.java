@@ -41,11 +41,11 @@ public class Player extends Entity{
 
 		solidArea = new Rectangle();
 
-		solidArea.x = 5;
-		solidArea.y = 16;
-		solidArea.width = 41;
+		solidArea.x = 7; //11
+		solidArea.y = 11; //21
+		solidArea.width = 25; //28
 		//да я знаю это опечатка. Будет fix но не сайчас 23:04 18.11.2022
-		solidArea.height = 12;
+		solidArea.height = 22; //27
 
 		setDefaultValues();
 		getPlayerImage();
