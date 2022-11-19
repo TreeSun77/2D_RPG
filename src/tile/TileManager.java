@@ -9,8 +9,10 @@ import java.io.*;
 public class TileManager {
 
 	GamePanel gp;
-	Tile[] tile;
-	int mapTileNum [][];
+
+	public Tile[] tile;
+
+	public int mapTileNum [][];
 
 	File t =new File("src/res/player/bg/grass.png");
 	File t1 =new File("src/res/player/bg/water.png");
@@ -34,14 +36,13 @@ public class TileManager {
 			// GRASS
 			tile[0] = new Tile();
 			tile[0].image = ImageIO.read(t);
-		    tile [0].collision = false;
+
 			// WATER
 			tile[1] = new Tile();
 			tile[1].image = ImageIO.read(t1);
 			tile [1].collision = true;
 
 			// WALL
-
 			tile[2] = new Tile();
 			tile[2].image = ImageIO.read(t2);
 			tile [2].collision = true;
@@ -49,7 +50,7 @@ public class TileManager {
 			/// Sand tile 3
 			tile[3] = new Tile();
 			tile[3].image = ImageIO.read(t3);
-			tile [3].collision = true;
+
 
 
 			///  tree tile 4

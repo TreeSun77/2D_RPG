@@ -38,13 +38,22 @@ public class Player extends Entity{
 
 		screenX = gp.screenWidth/2 - (gp.tileSize/2);
 		screenY = gp.screenHeight /2 - (gp.tileSize/2);
+
+		solidArea = new Rectangle();
+
+		solidArea.x = 5;
+		solidArea.y = 16;
+		solidArea.width = 41;
+		//да я знаю это опечатка. Будет fix но не сайчас 23:04 18.11.2022
+		solidArea.height = 12;
+
 		setDefaultValues();
 		getPlayerImage();
 	}
 
 	public void setDefaultValues(){
-		worldX = gp.tileSize * 2;
-		worldY = gp.tileSize * 4;
+		worldX = gp.tileSize * 10;
+		worldY = gp.tileSize * 15;
 		speed = 4;
 		direction = "up";
 	}
@@ -67,22 +76,50 @@ public class Player extends Entity{
 
 
 	public void update(){
-		if (keyH.upPressed == true || keyH.downPressed== true || keyH.rightPressed == true || keyH.leftPressed == true ) {
+		if (keyH.upPressed  || keyH.downPressed
+
+				|| keyH.rightPressed  || keyH.leftPressed ) {
 
 
-			if (keyH.upPressed == true) {
+			if (keyH.upPressed ) {
 				direction = "up";
-				worldY -= speed;
-			} else if (keyH.downPressed == true) {
+
+			} else if (keyH.downPressed ) {
 				direction = "down";
-				worldY += speed;
-			} else if (keyH.leftPressed == true) {
+
+			} else if (keyH.leftPressed ) {
 				direction = "left";
-				worldX -= speed;
-			} else if (keyH.rightPressed == true) {
+
+			} else if (keyH.rightPressed ) {
 				direction = "right";
-				worldX += speed;
+
 			}
+
+			//CHECK TILE COLLISION
+			collisionOn = false;
+			gp.cChecker.checkTile( this);
+
+
+			// IF COLLISION FALSE
+			if (collisionOn == false){
+				switch (direction){
+					case "up":
+						worldY -= speed;
+						break;
+					case "down":
+						worldY += speed;
+						break;
+					case  "left":
+						worldX -= speed;
+						break;
+					case "right":
+						worldX += speed;
+						break;
+
+
+				}
+			}
+
 
 			spriteCounter++;
 			if (spriteCounter > 15) {
