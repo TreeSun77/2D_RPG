@@ -1,9 +1,11 @@
 package main;
 
 import entity.Player;
+import object.SuperObject;
 import tile.TileManager;
 
 import javax.swing.*;
+import javax.swing.plaf.PanelUI;
 import java.awt.*;
 import java.io.IOException;
 
@@ -41,12 +43,11 @@ public class GamePanel extends JPanel implements Runnable{
 
 	Thread gameThread;
 
+	public CollisionChecker cChecker = new CollisionChecker( this);
+	public AssetSetter aSetter = new AssetSetter(this);
+
 	public  Player player = new Player(this, keyH);
-
-
-
-
-
+	public SuperObject obj[] = new SuperObject[100];
 
 
 	public GamePanel () throws IOException {
@@ -58,6 +59,11 @@ public class GamePanel extends JPanel implements Runnable{
 
 
 	}
+	public  void setupGame() throws IOException{
+		aSetter.setObject();
+
+	}
+
 	public void startGameThred() {
 		gameThread = new Thread(this);
 		gameThread.start();
@@ -97,10 +103,21 @@ public class GamePanel extends JPanel implements Runnable{
 	public void paintComponent (Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
+
+		// Call TILE
 		tileM.draw(g2);
+
+		//OBJECT
+		for (int i = 0; i < obj.length; i++ ){
+			if (obj[i] != null){
+				obj[i].draw(g2, this);
+			}
+		}
+
+
+
+		//Call PLAYER
 		player.draw(g2);
-
-
 		g2.dispose();
 
 

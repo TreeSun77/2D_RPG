@@ -16,6 +16,7 @@ public class Player extends Entity{
 
 	public final int screenX;
 	public  final  int screenY;
+	int hasKey = 0;
 
 
 	File p1 = new File("src/res/player/1.png");
@@ -38,13 +39,25 @@ public class Player extends Entity{
 
 		screenX = gp.screenWidth/2 - (gp.tileSize/2);
 		screenY = gp.screenHeight /2 - (gp.tileSize/2);
+
+		solidArea = new Rectangle();
+
+		solidArea.x = 9; //11
+		solidArea.y = 10; //21
+		solidArea.width = 25; //28
+
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
+		//да я знаю это опечатка. Будет fix но не сайчас 23:04 18.11.2022
+		solidArea.height = 22; //27
+
 		setDefaultValues();
 		getPlayerImage();
 	}
 
 	public void setDefaultValues(){
-		worldX = gp.tileSize * 2;
-		worldY = gp.tileSize * 4;
+		worldX = gp.tileSize * 10;
+		worldY = gp.tileSize * 15;
 		speed = 4;
 		direction = "up";
 	}
@@ -67,22 +80,55 @@ public class Player extends Entity{
 
 
 	public void update(){
-		if (keyH.upPressed == true || keyH.downPressed== true || keyH.rightPressed == true || keyH.leftPressed == true ) {
+		if (keyH.upPressed  || keyH.downPressed
+
+				|| keyH.rightPressed  || keyH.leftPressed ) {
 
 
-			if (keyH.upPressed == true) {
+			if (keyH.upPressed ) {
 				direction = "up";
-				worldY -= speed;
-			} else if (keyH.downPressed == true) {
+
+			} else if (keyH.downPressed ) {
 				direction = "down";
-				worldY += speed;
-			} else if (keyH.leftPressed == true) {
+
+			} else if (keyH.leftPressed ) {
 				direction = "left";
-				worldX -= speed;
-			} else if (keyH.rightPressed == true) {
+
+			} else if (keyH.rightPressed ) {
 				direction = "right";
-				worldX += speed;
+
 			}
+
+			//CHECK TILE COLLISION
+			collisionOn = false;
+			gp.cChecker.checkTile( this);
+
+			//CHECK OBJ COLLISION
+			int objIndex = gp.cChecker.checkObject(this, true);
+			puckUpObject(objIndex);
+
+
+
+				// IF COLLISION FALSE
+			if (collisionOn == false){
+				switch (direction){
+					case "up":
+						worldY -= speed;
+						break;
+					case "down":
+						worldY += speed;
+						break;
+					case  "left":
+						worldX -= speed;
+						break;
+					case "right":
+						worldX += speed;
+						break;
+
+
+				}
+			}
+
 
 			spriteCounter++;
 			if (spriteCounter > 15) {
@@ -103,6 +149,32 @@ public class Player extends Entity{
 		}
 
 	}
+	 // TAKE OBJ items
+	public void puckUpObject (int i){
+		if (i != 888){
+			String objectName = gp.obj[i].name;
+
+			switch (objectName){
+				case "Ключ":
+					hasKey++;
+					gp.obj[i] = null;
+					System.out.println("Keys: " +hasKey);
+					break;
+
+				case "Дверь":
+					if (hasKey > 0){
+						gp.obj[i] = null;
+						hasKey--;
+					}
+					System.out.println("Keys: " +hasKey);
+					break;
+
+			}
+
+		}
+
+	}
+
 	public void draw (Graphics2D g2){
 		BufferedImage image = null;
 		switch (direction) {
