@@ -16,6 +16,7 @@ public class Entity {
 
 	//колизия обьетка
 	public Rectangle solidArea;
+	public int solidAreaDefaultX, solidAreaDefaultY;
 	public  boolean collisionOn = false;
 
 

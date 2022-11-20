@@ -25,12 +25,22 @@ public class AssetSetter {
         gp.obj[i].worldY = 28 * gp.tileSize;
         i++;
 
-        //DOOR
+        //DOOR 1 house
         gp.obj[i] = new O_Door();
         gp.obj[i].worldX = 28 * gp.tileSize;
         gp.obj[i].worldY = 41 * gp.tileSize;
         i++;
 
+        //DOOR 2 route
+        gp.obj[i] = new O_Door();
+        gp.obj[i].worldX = 20 * gp.tileSize;
+        gp.obj[i].worldY = 36 * gp.tileSize;
+        i++;
+        //DOOR 3 route
+        gp.obj[i] = new O_Door();
+        gp.obj[i].worldX = 21 * gp.tileSize;
+        gp.obj[i].worldY = 36 * gp.tileSize;
+        i++;
         //CHEST
         gp.obj[i] = new O_Chest();
         gp.obj[i].worldX = 28 * gp.tileSize;
