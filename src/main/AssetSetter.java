@@ -2,6 +2,7 @@ package main;
 
 import object.O_Chest;
 import object.O_Door;
+import object.O_HastePotion;
 import object.O_Key;
 
 import java.io.IOException;
@@ -46,6 +47,13 @@ public class AssetSetter {
         gp.obj[i].worldX = 28 * gp.tileSize;
         gp.obj[i].worldY = 44 * gp.tileSize;
         i++;
+
+        //POTION HASTE
+        gp.obj[i] = new O_HastePotion();
+        gp.obj[i].worldX = 10 * gp.tileSize;
+        gp.obj[i].worldY = 14 * gp.tileSize;
+        i++;
+
     }
 
 }
