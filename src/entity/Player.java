@@ -149,26 +149,32 @@ public class Player extends Entity{
 		}
 
 	}
-	 // TAKE OBJ items
+	 // TAKE OBJ item
 	public void puckUpObject (int i){
 		if (i != 888){
 			String objectName = gp.obj[i].name;
 
 			switch (objectName){
 				case "Ключ":
+					gp.playSE(1);
 					hasKey++;
 					gp.obj[i] = null;
 					System.out.println("Keys: " +hasKey);
 					break;
 
 				case "Дверь":
+					gp.playSE(3);
 					if (hasKey > 0){
 						gp.obj[i] = null;
 						hasKey--;
 					}
 					System.out.println("Keys: " +hasKey);
 					break;
-
+				case "Ускорение":
+					gp.playSE(2);
+					speed += 2;
+					gp.obj[i] = null;
+					break;
 			}
 
 		}
