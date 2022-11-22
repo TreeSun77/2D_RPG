@@ -149,7 +149,7 @@ public class Player extends Entity{
 		}
 
 	}
-	 // TAKE OBJ items
+	 // TAKE OBJ item
 	public void puckUpObject (int i){
 		if (i != 888){
 			String objectName = gp.obj[i].name;
