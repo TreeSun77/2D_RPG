@@ -16,7 +16,10 @@ public class Player extends Entity{
 
 	public final int screenX;
 	public  final  int screenY;
-	int hasKey = 0;
+	public int hasKey = 0;
+	int standCounter = 0;
+	boolean moving = false;
+	int pixelCounter = 0;
 
 
 	File p1 = new File("src/res/player/1.png");
@@ -41,15 +44,15 @@ public class Player extends Entity{
 		screenY = gp.screenHeight /2 - (gp.tileSize/2);
 
 		solidArea = new Rectangle();
-
-		solidArea.x = 9; //11
-		solidArea.y = 10; //21
-		solidArea.width = 25; //28
-
+		solidArea.x = 1;
+		solidArea.y = 1;
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
+		solidArea.width = 44;
+		solidArea.height = 45;
+
 		//да я знаю это опечатка. Будет fix но не сайчас 23:04 18.11.2022
-		solidArea.height = 22; //27
+
 
 		setDefaultValues();
 		getPlayerImage();
@@ -80,73 +83,95 @@ public class Player extends Entity{
 
 
 	public void update(){
-		if (keyH.upPressed  || keyH.downPressed
+		if (!moving) {
 
-				|| keyH.rightPressed  || keyH.leftPressed ) {
+			if (keyH.upPressed || keyH.downPressed
 
-
-			if (keyH.upPressed ) {
-				direction = "up";
-
-			} else if (keyH.downPressed ) {
-				direction = "down";
-
-			} else if (keyH.leftPressed ) {
-				direction = "left";
-
-			} else if (keyH.rightPressed ) {
-				direction = "right";
-
-			}
-
-			//CHECK TILE COLLISION
-			collisionOn = false;
-			gp.cChecker.checkTile( this);
-
-			//CHECK OBJ COLLISION
-			int objIndex = gp.cChecker.checkObject(this, true);
-			puckUpObject(objIndex);
+					|| keyH.rightPressed || keyH.leftPressed) {
 
 
+				if (keyH.upPressed) {
+					direction = "up";
 
-				// IF COLLISION FALSE
-			if (collisionOn == false){
-				switch (direction){
-					case "up":
-						worldY -= speed;
-						break;
-					case "down":
-						worldY += speed;
-						break;
-					case  "left":
-						worldX -= speed;
-						break;
-					case "right":
-						worldX += speed;
-						break;
+				} else if (keyH.downPressed) {
+					direction = "down";
 
+				} else if (keyH.leftPressed) {
+					direction = "left";
 
+				} else if (keyH.rightPressed) {
+					direction = "right";
 				}
+
+				moving = true;
+
+				//CHECK TILE COLLISION
+				collisionOn = false;
+				gp.cChecker.checkTile(this);
+
+				//CHECK OBJ COLLISION
+				int objIndex = gp.cChecker.checkObject(this, true);
+				puckUpObject(objIndex);
+
 			}
-
-
-			spriteCounter++;
-			if (spriteCounter > 15) {
-				if (spriteNum == 1) {
-					spriteNum = 2;
-				} else if (spriteNum == 2) {
-					spriteNum = 3;
-				} else if (spriteNum == 3) {
-					spriteNum = 4;
-
-				} else if (spriteNum == 4) {
+			// ANIMATION bug freeze moving FIX
+			else {
+				standCounter++;
+				if (standCounter == 20) {
 					spriteNum = 1;
-
+					standCounter = 0;
 				}
-				spriteCounter = 0;
-
 			}
 		}
+			if (moving){
+
+				// IF COLLISION FALSE
+				if (!collisionOn ){
+					switch (direction){
+						case "up":
+							worldY -= speed;
+							break;
+						case "down":
+							worldY += speed;
+							break;
+						case  "left":
+							worldX -= speed;
+							break;
+						case "right":
+							worldX += speed;
+							break;
+
+
+					}
+				}
+
+
+				spriteCounter++;
+				if (spriteCounter > 11) {
+					if (spriteNum == 1) {
+						spriteNum = 2;
+					} else if (spriteNum == 2) {
+						spriteNum = 3;
+					} else if (spriteNum == 3) {
+						spriteNum = 4;
+
+					} else if (spriteNum == 4) {
+						spriteNum = 1;
+
+					}
+					spriteCounter = 0;
+
+		}
+		pixelCounter += speed;
+
+		if (pixelCounter == 48){
+			moving = false;
+			pixelCounter = 0;
+		}
+			}
+
+
+
 
 	}
 	 // TAKE OBJ item
@@ -159,21 +184,35 @@ public class Player extends Entity{
 					gp.playSE(1);
 					hasKey++;
 					gp.obj[i] = null;
-					System.out.println("Keys: " +hasKey);
+					gp.ui.showMessage("Получен ключ");
+					//System.out.println("Keys: " +hasKey);
 					break;
 
 				case "Дверь":
-					gp.playSE(3);
+
 					if (hasKey > 0){
+						gp.playSE(3);
 						gp.obj[i] = null;
 						hasKey--;
+						gp.ui.showMessage("Дверь открыта");
 					}
-					System.out.println("Keys: " +hasKey);
+					else {
+						gp.ui.showMessage("Нужен ключ. Закрыто!");
+					}
+					//System.out.println("Keys: " +hasKey);
 					break;
 				case "Ускорение":
 					gp.playSE(2);
 					speed += 2;
 					gp.obj[i] = null;
+					gp.ui.showMessage("Зелье скорости. Speed + 2");
+					break;
+
+
+				case "Сундук":
+					gp.ui.gameFinished = true;
+					gp.stopMusic();
+					gp.playSE(4);
 					break;
 			}
 
