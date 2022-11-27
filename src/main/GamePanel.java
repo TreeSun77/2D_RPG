@@ -10,8 +10,6 @@ import java.awt.*;
 import java.io.IOException;
 
 public class GamePanel extends JPanel implements Runnable{
-
-
 	//SCREEN SETTING
 
 	public  final int originalTitleSize = 16;
@@ -30,7 +28,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public  final int maxWorldCol = 90;
 	public  final int maxWorldRow = 50;
 
-
+	public final int worldWidth = tileSize * maxWorldCol;
+	public  final  int worldHeight = tileSize * maxWorldRow;
 
 	int FPS = 60;
 	TileManager tileM = new TileManager(this);
@@ -39,6 +38,7 @@ public class GamePanel extends JPanel implements Runnable{
 	KeyHandler keyH = new KeyHandler(this);
 	Sound music = new Sound();
 	Sound se = new Sound();
+
 
 
 	public CollisionChecker cChecker = new CollisionChecker( this);

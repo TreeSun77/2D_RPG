@@ -52,8 +52,6 @@ public class Player extends Entity{
 		solidArea.height = 45;
 
 		//да я знаю это опечатка. Будет fix но не сайчас 23:04 18.11.2022
-
-
 		setDefaultValues();
 		getPlayerImage();
 	}
@@ -107,6 +105,7 @@ public class Player extends Entity{
 
 				//CHECK TILE COLLISION
 				collisionOn = false;
+				// on\OFF CHECK COLLISION
 				gp.cChecker.checkTile(this);
 
 				//CHECK OBJ COLLISION
@@ -284,6 +283,24 @@ public class Player extends Entity{
 				break;
 
 		}
-	g2.drawImage(image, screenX , screenY ,gp.tileSize, gp.tileSize, null);
+			int x = screenX;
+			int y = screenY;
+
+			if (screenX > worldX){
+				x = worldX;
+
+			}
+			if(screenY > worldY){
+				y = worldY;
+			}
+		int rightOffset = gp.screenWidth - screenX;
+		if (rightOffset > gp.worldWidth - worldX){
+			x = gp.screenWidth - (gp.worldWidth - worldX);
+		}
+		int bottomOffset = gp.screenHeight - screenY;
+		if (bottomOffset > gp.worldHeight - worldY){
+			y = gp.screenHeight - (gp.worldHeight - worldY);
+		}
+			g2.drawImage(image, x , y ,gp.tileSize, gp.tileSize, null);
 	}
 }
